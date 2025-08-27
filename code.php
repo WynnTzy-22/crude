@@ -75,4 +75,29 @@ if(isset($_POST['save_student']))
     }
 }
 
+
+if(isset($_POST['save_subject']))
+{
+    $subject_name = mysqli_real_escape_string($con, $_POST['subject_name']);
+    $subject_code = mysqli_real_escape_string($con, $_POST['subject_code']);
+    $course = mysqli_real_escape_string($con, $_POST['course']);
+
+    $query = "INSERT INTO subjects (subject_name, subject_code, course) VALUES ('$subject_name', '$subject_code', '$course')";
+    $query_run = mysqli_query($con, $query);
+
+    if($query_run)
+    {
+        $_SESSION['message'] = "Subject Added Successfully";
+        header("Location: index.php");
+        exit(0);
+    }
+    else
+    {
+        $_SESSION['message'] = "Subject Not Added";
+        header("Location: index.php");
+        exit(0);
+    }
+}
+
+
 ?>

@@ -30,7 +30,7 @@
                     <div class="card-header">
                         <h4>Student Details
                             <a href="student-create.php" class="btn btn-primary float-end">Add Students</a>
-                        </h4>
+                            
                     </div>
                     <div class="card-body">
 
@@ -62,6 +62,59 @@
                                                 <td><?= $student['phone']; ?></td>
                                                 <td><?= $student['course']; ?></td>
                                                 <td>
+
+                                                <div class="card mt-4">
+    <div class="card-header">
+        <h4>Subject Details
+            <a href="student-create.php" class="btn btn-primary float-end">Add Subject</a>
+        </h4>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Subject Name</th>
+                    <th>Subject Code</th>
+                    <th>Course</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                    $subject_query = "SELECT * FROM subjects";
+                    $subject_query_run = mysqli_query($con, $subject_query);
+
+                    if(mysqli_num_rows($subject_query_run) > 0)
+                    {
+                        foreach($subject_query_run as $subject)
+                        {
+                            ?>
+                            <tr>
+                                <td><?= $subject['id']; ?></td>
+                                <td><?= $subject['subject_name']; ?></td>
+                                <td><?= $subject['subject_code']; ?></td>
+                                <td><?= $subject['course']; ?></td>
+                                <td>
+                                    <!-- Add Edit/View/Delete buttons for subjects if you want -->
+                                    <a href="subject-edit.php?id=<?= $subject['id']; ?>" class="btn btn-success btn-sm">Edit</a>
+                                    <form action="code.php" method="POST" class="d-inline">
+                                        <button type="submit" name="delete_subject" value="<?= $subject['id']; ?>" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                    }
+                    else
+                    {
+                        echo "<tr><td colspan='5'>No Subjects Found</td></tr>";
+                    }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
                                                     <a href="student-view.php?id=<?= $student['id']; ?>" class="btn btn-info btn-sm">View</a>
                                                     <a href="student-edit.php?id=<?= $student['id']; ?>" class="btn btn-success btn-sm">Edit</a>
                                                     <form action="code.php" method="POST" class="d-inline">
